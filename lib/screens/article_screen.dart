@@ -17,6 +17,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
       Completer<WebViewController>();
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -46,6 +47,8 @@ class _ArticleScreenState extends State<ArticleScreen> {
         elevation: 0.0,
       ),
       body: Container(
+        height: size.height,
+        width: size.width,
         child: WebView(
           initialUrl: widget.newsUrl,
           onWebViewCreated: ((WebViewController webViewController) =>
