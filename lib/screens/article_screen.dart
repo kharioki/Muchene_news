@@ -29,7 +29,8 @@ class _ArticleScreenState extends State<ArticleScreen> {
             Text(
               'News',
               style: TextStyle(
-                color: Colors.blue,
+                color: Colors.pink,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],

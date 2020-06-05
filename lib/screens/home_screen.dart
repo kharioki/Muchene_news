@@ -3,6 +3,7 @@ import 'package:muchene_news/model/article.dart';
 import 'package:muchene_news/model/category.dart';
 import 'package:muchene_news/model/news.dart';
 import 'package:muchene_news/screens/article_screen.dart';
+import 'package:muchene_news/screens/category_news_screen.dart';
 import 'package:muchene_news/widgets/category_tile.dart';
 import 'package:muchene_news/widgets/news_tile.dart';
 
@@ -46,7 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               'News',
               style: TextStyle(
-                color: Colors.blue,
+                color: Colors.pink,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],
@@ -58,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ? Center(
               child: Container(
                 child: CircularProgressIndicator(
-                  backgroundColor: Colors.amber,
+                  backgroundColor: Colors.pink,
                 ),
               ),
             )
@@ -69,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: <Widget>[
                     // News categories
                     Container(
-                      height: 70,
+                      height: 90,
                       child: ListView.builder(
                         itemCount: categories.length,
                         shrinkWrap: true,
@@ -77,6 +79,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) => CategoryTile(
                           categoryName: categories[index].categoryName,
                           imageUrl: categories[index].imageUrl,
+                          press: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CategoryNewsScreen(
+                                category: categories[index].categoryName,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),

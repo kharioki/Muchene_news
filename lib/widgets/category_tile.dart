@@ -4,13 +4,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 class CategoryTile extends StatelessWidget {
   final String imageUrl;
   final String categoryName;
+  final Function press;
 
-  CategoryTile({this.imageUrl, this.categoryName});
+  CategoryTile({this.imageUrl, this.categoryName, this.press});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: press,
       child: Container(
         margin: EdgeInsets.only(right: 16),
         child: Stack(
@@ -20,14 +21,14 @@ class CategoryTile extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
                 width: 120,
-                height: 60,
+                height: 80,
                 fit: BoxFit.cover,
               ),
             ),
             Container(
               alignment: Alignment.center,
               width: 120,
-              height: 60,
+              height: 80,
               decoration: BoxDecoration(
                 color: Colors.black26,
                 borderRadius: BorderRadius.circular(6),
