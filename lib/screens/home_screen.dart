@@ -85,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListView.builder(
                         itemCount: articles.length,
                         shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
                         itemBuilder: (context, index) => NewsTile(
                           imageUrl: articles[index].urlToImage,
                           title: articles[index].title,
@@ -159,11 +160,28 @@ class NewsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 16),
       child: Column(
         children: <Widget>[
-          Image.network(imageUrl),
-          Text(title),
-          Text(description),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: Image.network(imageUrl),
+          ),
+          SizedBox(height: 8),
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 17,
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            description,
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+          ),
         ],
       ),
     );
