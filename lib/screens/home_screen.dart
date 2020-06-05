@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:muchene_news/model/article.dart';
 import 'package:muchene_news/model/category.dart';
+import 'package:muchene_news/model/news.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -8,11 +10,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Category> categories = new List<Category>();
+  List<Article> articles = new List<Article>();
+  bool _loading = true;
 
   @override
   void initState() {
     super.initState();
     categories = getCategories();
+    getNews();
+  }
+
+  getNews() async {
+    News news = News();
+
+    await news.getNews();
+    articles = news.news;
+    setState(() {
+      _loading = false;
+    });
   }
 
   @override
@@ -36,25 +51,47 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              height: 70,
-              child: ListView.builder(
-                itemCount: categories.length,
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => CategoryTile(
-                  categoryName: categories[index].categoryName,
-                  imageUrl: categories[index].imageUrl,
+      body: _loading
+          ? Center(
+              child: Container(
+                child: CircularProgressIndicator(),
+              ),
+            )
+          : SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    // News categories
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      height: 70,
+                      child: ListView.builder(
+                        itemCount: categories.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => CategoryTile(
+                          categoryName: categories[index].categoryName,
+                          imageUrl: categories[index].imageUrl,
+                        ),
+                      ),
+                    ),
+
+                    // News tiles
+                    Container(
+                      child: ListView.builder(
+                        itemCount: articles.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => NewsTile(
+                          imageUrl: articles[index].urlToImage,
+                          title: articles[index].title,
+                          description: articles[index].description,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -63,7 +100,7 @@ class CategoryTile extends StatelessWidget {
   final String imageUrl;
   final String categoryName;
 
-  const CategoryTile({this.imageUrl, this.categoryName});
+  CategoryTile({this.imageUrl, this.categoryName});
 
   @override
   Widget build(BuildContext context) {

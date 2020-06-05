@@ -5,7 +5,7 @@ class Article {
   String url;
   String urlToImage;
   String content;
-  DateTime publishedAt;
+  String publishedAt;
 
   Article(this.author, this.title, this.description, this.url, this.urlToImage,
       this.content, this.publishedAt);
