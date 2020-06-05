@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:muchene_news/model/article.dart';
 import 'package:muchene_news/model/category.dart';
 import 'package:muchene_news/model/news.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:muchene_news/screens/article_screen.dart';
+import 'package:muchene_news/widgets/category_tile.dart';
+import 'package:muchene_news/widgets/news_tile.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -90,6 +92,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           imageUrl: articles[index].urlToImage,
                           title: articles[index].title,
                           description: articles[index].description,
+                          url: articles[index].url,
+                          press: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ArticleScreen(
+                                newsUrl: articles[index].url,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -97,93 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-    );
-  }
-}
-
-class CategoryTile extends StatelessWidget {
-  final String imageUrl;
-  final String categoryName;
-
-  CategoryTile({this.imageUrl, this.categoryName});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        margin: EdgeInsets.only(right: 16),
-        child: Stack(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                width: 120,
-                height: 60,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              width: 120,
-              height: 60,
-              decoration: BoxDecoration(
-                color: Colors.black26,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(
-                categoryName,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class NewsTile extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String description;
-
-  NewsTile(
-      {@required this.imageUrl,
-      @required this.title,
-      @required this.description});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 16),
-      child: Column(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Image.network(imageUrl),
-          ),
-          SizedBox(height: 8),
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 17,
-            ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            description,
-            style: TextStyle(
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
