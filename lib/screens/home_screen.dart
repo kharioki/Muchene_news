@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muchene_news/model/category.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -6,6 +7,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Category> categories = new List<Category>();
+
+  @override
+  void initState() {
+    super.initState();
+    categories = getCategories();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +35,22 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         centerTitle: true,
         elevation: 0.0,
+      ),
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: ListView.builder(
+                itemCount: categories.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => CategoryTile(
+                  categoryName: categories[index].categoryName,
+                  imageUrl: categories[index].imageUrl,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
