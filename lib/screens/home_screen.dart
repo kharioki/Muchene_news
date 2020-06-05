@@ -40,9 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: <Widget>[
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              height: 70,
               child: ListView.builder(
                 itemCount: categories.length,
                 shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => CategoryTile(
                   categoryName: categories[index].categoryName,
                   imageUrl: categories[index].imageUrl,
@@ -64,14 +67,62 @@ class CategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        margin: EdgeInsets.only(right: 16),
+        child: Stack(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: Image.network(
+                imageUrl,
+                width: 120,
+                height: 60,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              width: 120,
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.black26,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                categoryName,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class NewsTile extends StatelessWidget {
+  final String imageUrl;
+  final String title;
+  final String description;
+
+  NewsTile(
+      {@required this.imageUrl,
+      @required this.title,
+      @required this.description});
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      child: Stack(
+      child: Column(
         children: <Widget>[
-          Image.network(
-            imageUrl,
-            width: 120,
-            height: 60,
-          ),
+          Image.network(imageUrl),
+          Text(title),
+          Text(description),
         ],
       ),
     );
