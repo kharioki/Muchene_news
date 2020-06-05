@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:muchene_news/model/article.dart';
 import 'package:muchene_news/model/category.dart';
 import 'package:muchene_news/model/news.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -54,16 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
       body: _loading
           ? Center(
               child: Container(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.amber,
+                ),
               ),
             )
           : SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Container(
                 child: Column(
                   children: <Widget>[
                     // News categories
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
                       height: 70,
                       child: ListView.builder(
                         itemCount: categories.length,
@@ -78,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // News tiles
                     Container(
+                      padding: EdgeInsets.only(top: 16),
                       child: ListView.builder(
                         itemCount: articles.length,
                         shrinkWrap: true,
@@ -112,8 +116,8 @@ class CategoryTile extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
-              child: Image.network(
-                imageUrl,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
                 width: 120,
                 height: 60,
                 fit: BoxFit.cover,
